@@ -25,6 +25,6 @@ class Board
 public:
 	Board();
 	~Board();
-	void draw() const;
+	void draw(sf::RenderWindow& window) const;
 };
 
