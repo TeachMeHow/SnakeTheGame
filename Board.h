@@ -14,17 +14,21 @@ class Board
 	const sf::Color wall_color = sf::Color(41, 41, 41, 255);
 	const sf::Color score_text_color = sf::Color(41, 41, 41, 255);
 	const sf::Color	record_text_color = sf::Color(149, 36, 0, 255);
+	const sf::Color field_color = sf::Color(77, 77, 77, 255);
+
 	// number of fields vertical and horizontal
 	int fields_x;
 	int fields_y;
-	int size_x;
-	int size_y;
 	// grid of fields
 	Field** grid;
+	
+
 
 public:
 	Board();
 	~Board();
-	void draw(sf::RenderWindow& window) const;
+	// draws the background
+	void draw(sf::RenderWindow& window, sf::Font& font) const;
+
 };
 
