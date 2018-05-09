@@ -9,7 +9,8 @@ class Game
 	sf::RenderWindow& window;
 	int window_width, window_height;
 	enum GameStates { START, IN_PROGRESS, END } state;
-	Board board;
+	Board board; 
+	Snake snake;
 public:
 	Game(sf::RenderWindow& win);
 	~Game();

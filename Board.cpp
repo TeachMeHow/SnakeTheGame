@@ -2,7 +2,7 @@
 
 
 
-Board::Board()
+Board::Board(Snake& sneck) : snake(sneck)
 {
 	fields_x = 15;
 	fields_y = 15;
@@ -75,5 +75,4 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 	}
 	window.draw(score);
 	window.draw(best_score);
-	window.display();
 }

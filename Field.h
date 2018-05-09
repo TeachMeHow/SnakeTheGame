@@ -5,8 +5,12 @@
 // if snake is on it and it hits it, snake dies
 class Field
 {
+	bool apple;
 public:
 	Field();
 	~Field();
+	void set_apple() { apple = true; }
+	void eat_apple() { apple = false; }
+	bool has_apple() { return apple; }
 };
 

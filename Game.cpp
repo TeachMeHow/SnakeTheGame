@@ -2,7 +2,7 @@
 
 
 
-Game::Game(sf::RenderWindow& win) : window(win)//, board()
+Game::Game(sf::RenderWindow& win) : window(win), board(snake)//, board()
 {
 	window_width = 600;
 	// 600 for board + 200 for score
@@ -11,6 +11,8 @@ Game::Game(sf::RenderWindow& win) : window(win)//, board()
 	window_settings.antialiasingLevel = 8;
 	window.create(sf::VideoMode(window_width, window_height), "Snake", sf::Style::Titlebar | sf::Style::Close, window_settings);
 	window.setFramerateLimit(60);
+	
+	snake.set_start_point(6, 6, 3);
 	//sf::Thread game_thread(&Game::start_game, &window);
 	//game_thread.launch();
 
@@ -37,8 +39,25 @@ void Game::start_game()
 			{
 				state = END;
 			}
+			if (event.type == sf::Event::KeyPressed)
+			{
+				/*sf::Keyboard::Left;
+				sf::Keyboard::Right;
+				sf::Keyboard::Up;
+				sf::Keyboard::Down;*/
+				if (event.key.code == sf::Keyboard::Up)
+					snake.steer(0);
+				else if (event.key.code == sf::Keyboard::Right)
+					snake.steer(1);
+				else if (event.key.code == sf::Keyboard::Down)
+					snake.steer(2);
+				else if (event.key.code == sf::Keyboard::Left)
+					snake.steer(3);
+			}
 		}
 		board.draw(window, font);
+		snake.draw(window);
+		window.display();
 	}
 	window.close();
 }

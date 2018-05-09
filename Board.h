@@ -22,10 +22,11 @@ class Board
 	// grid of fields
 	Field** grid;
 	
+	Snake& snake;
 
 
 public:
-	Board();
+	Board(Snake& sneck);
 	~Board();
 	// draws the background
 	void draw(sf::RenderWindow& window, sf::Font& font) const;

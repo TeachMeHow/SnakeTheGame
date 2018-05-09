@@ -4,6 +4,7 @@
 
 Field::Field()
 {
+	apple = false;
 }
 
 
