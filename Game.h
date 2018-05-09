@@ -20,5 +20,6 @@ public:
 	void start_game();
 	void _debug_change_state(int i);
 	void add_score(int score);
+	void intro(sf::RenderWindow& win);
 };
 

@@ -64,10 +64,6 @@ void Game::start_game()
 			}
 			if (event.type == sf::Event::KeyPressed)
 			{
-				/*sf::Keyboard::Left;
-				sf::Keyboard::Right;
-				sf::Keyboard::Up;
-				sf::Keyboard::Down;*/
 				if (event.key.code == sf::Keyboard::Up)
 					snake.steer(0);
 				else if (event.key.code == sf::Keyboard::Right)
@@ -115,4 +111,9 @@ void Game::add_score(int score)
 	std::sort(scores.begin(), scores.end(), [](int a, int b) { return a > b; });
 	if (scores.size() > 1000)
 		scores.pop_back();
+}
+
+void Game::intro(sf::RenderWindow& win)
+{
+	
 }
