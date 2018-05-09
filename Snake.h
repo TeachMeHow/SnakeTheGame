@@ -11,6 +11,7 @@
 class Snake
 {
 	int size = 0;
+	sf::Color color = sf::Color(149, 36, 0, 255);
 	// % of base 
 	double speed_multiplier = 3;
 	enum Directions {UP, RIGHT, DOWN, LEFT } direction;
@@ -26,6 +27,7 @@ public:
 	bool has_snake(const sf::Vector2i coords);
 	int get_size() { return size; }
 	void move();
+	bool collision();
 	// 0 - go up
 	// 1 - go right
 	// 2 - go down
@@ -35,5 +37,6 @@ public:
 	// x, y is pos on grid
 	// dir is the starting direction
 	void set_start_point(int x, int y, int dir);
+	sf::Vector2i head();
 };
 

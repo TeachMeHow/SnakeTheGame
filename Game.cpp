@@ -56,6 +56,9 @@ void Game::start_game()
 			}
 		}
 		board.update();
+		snake.move();
+		if (snake.collision())
+			state = END;
 		board.draw(window, font);
 		snake.draw(window);
 		window.display();

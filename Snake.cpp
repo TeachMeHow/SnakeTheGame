@@ -17,7 +17,6 @@ Snake::~Snake()
 
 void Snake::draw(sf::RenderWindow & window)
 {
-	sf::Color color = sf::Color(149, 36, 0, 255);
 	sf::RectangleShape snake_tail;
 	snake_tail.setFillColor(color);
 	snake_tail.setSize(sf::Vector2f(27,27));
@@ -40,13 +39,14 @@ void Snake::operator++()
 bool Snake::has_snake(const sf::Vector2i coords)
 {
 	auto it = coordinates.cbegin();
-	while (it != coordinates.cend());
+	while (it != coordinates.cend())
 	{
+
 		if (*it == coords)
 		{
 			return true;
 		}
-		it++;
+		++it;
 	}
 	return false;
 }
@@ -76,6 +76,23 @@ void Snake::move()
 		}
 		coordinates.pop_back();
 	}
+}
+
+bool Snake::collision()
+{
+	sf::Vector2i head_coords = coordinates.front();
+	auto it = coordinates.cbegin();
+	it++;
+	while (it != coordinates.cend())
+	{
+		if (*it == head_coords || head_coords.x < 0 || head_coords.y < 0 || head_coords.x > 19 || head_coords.y > 19)
+		{
+			color = sf::Color::Black;
+			return true;
+		}
+		it++;
+	}
+	return false;
 }
 
 void Snake::steer(int dir)
@@ -124,4 +141,11 @@ void Snake::set_start_point(int x, int y, int dir)
 	coordinates.push_back(sf::Vector2i(x, y));
 	coordinates.push_back(sf::Vector2i(x + 1, y));
 	coordinates.push_back(sf::Vector2i(x + 2, y));
+	coordinates.push_back(sf::Vector2i(x + 3, y));
+	coordinates.push_back(sf::Vector2i(x + 4, y));
+}
+
+sf::Vector2i Snake::head()
+{
+	return coordinates.front();
 }

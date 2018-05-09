@@ -9,7 +9,12 @@ void Board::update()
 	{
 		place_apple();
 	}
-	snake.move();
+	if (snake.head() == apple_coords)
+	{
+		// apple_placed = false;
+		place_apple();
+		++snake;
+	}
 
 }
 
@@ -24,6 +29,7 @@ Board::Board(Snake& sneck) : snake(sneck)
 			coordinates.emplace_back(sf::Vector2i(x, y));
 		}
 	}
+	srand(time(NULL));
 }
 
 
@@ -107,16 +113,15 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 
 void Board::place_apple()
 {
-	//int range = (fields_x) * fields_y - 1;
-	//// generate random
-	//int r = 0;
-	//while (true)
-	//{
-	//	if (!snake.has_snake(coordinates[r]))
-	//	{
-	//		apple_placed = true;
-	//		apple_coords = coordinates[r];
-	//		break;
-	//	}
-	//}
+	int range = fields_x * fields_y;
+	// generate random
+	while (true)
+	{
+		int r = rand() % range;
+		if (!snake.has_snake(coordinates[r]))
+		{
+			apple_coords = coordinates[r];
+			return;
+		}
+	}
 }
