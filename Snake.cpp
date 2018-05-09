@@ -21,18 +21,24 @@ void Snake::draw(sf::RenderWindow & window)
 	snake_tail.setFillColor(color);
 	snake_tail.setSize(sf::Vector2f(27,27));
 	// TODO fix
-	auto dw = [&snake_tail, &window](const sf::Vector2i& c) 
-	{ 
-		snake_tail.setPosition(sf::Vector2f(30 + c.x * 27, 30 + c.y * 27)); 
+	auto it = coordinates.cbegin();
+	while (it != coordinates.cend())
+	{
+		snake_tail.setPosition(sf::Vector2f(30 + (*it).x * 27, 30 + (*it).y * 27));
+		if (it == coordinates.cbegin())
+			snake_tail.setFillColor(sf::Color(120, 29, 0, 255));
+		else
+			snake_tail.setFillColor(color);
 		window.draw(snake_tail);
-	};
-	std::for_each(coordinates.cbegin(), coordinates.cend(), dw);
+		it++;
+		
+	}
 	
 }
 
 void Snake::operator++()
 { 
-	++size;
+	++points;
 	coordinates.push_back(coordinates.back());
 }
 
@@ -138,11 +144,11 @@ void Snake::set_start_point(int x, int y, int dir)
 		// TODO arg error
 	default: break;
 	}
-	coordinates.push_back(sf::Vector2i(x, y));
-	coordinates.push_back(sf::Vector2i(x + 1, y));
-	coordinates.push_back(sf::Vector2i(x + 2, y));
-	coordinates.push_back(sf::Vector2i(x + 3, y));
-	coordinates.push_back(sf::Vector2i(x + 4, y));
+	// 4 - starting size
+	for (size_t i = 0; i < 4; i++)
+	{
+		coordinates.emplace_back(sf::Vector2i(x + i, y));
+	}
 }
 
 sf::Vector2i Snake::head()

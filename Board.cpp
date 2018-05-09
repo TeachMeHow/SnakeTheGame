@@ -5,13 +5,8 @@
 
 void Board::update()
 {
-	if (apple_placed == false)
-	{
-		place_apple();
-	}
 	if (snake.head() == apple_coords)
 	{
-		// apple_placed = false;
 		place_apple();
 		++snake;
 	}
@@ -37,7 +32,7 @@ Board::~Board()
 {
 }
 
-void Board::draw(sf::RenderWindow & window, sf::Font& font) const
+void Board::draw(sf::RenderWindow & window, sf::Font& font, std::vector<int>& scores) const
 {
 	window.clear(bg_color);
 	int window_width = window.getSize().x;
@@ -70,7 +65,8 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 	int score_font_size = 36;
 	score.setCharacterSize(score_font_size);
 	score.setPosition(sf::Vector2f(20, 600 + 100));
-	score.setString("Score: 123");
+	std::string str = std::to_string(snake.get_points());
+	score.setString("Score: " + str);
 
 	sf::Text best_score;
 	best_score.setFont(font);
@@ -81,7 +77,8 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 	best_score_pos.x = window.getSize().x / 2;
 	best_score_pos.y = 600 + 100 - (best_font_size - score_font_size);
 	best_score.setPosition(best_score_pos);
-	best_score.setString("BEST SCORE: 200");
+	str = scores.empty() ? "NONE" : std::to_string(scores.front());
+	best_score.setString("BEST SCORE: " + str);
 
 
 
@@ -98,15 +95,12 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 			}
 		}
 	}
-	if (apple_placed)
-	{
-		sf::RectangleShape apple;
-		apple.setSize(board_field.getSize());
-		apple.setFillColor(sf::Color::Red);
-		sf::Vector2f position = foreground.getPosition() + field_size * sf::Vector2f(apple_coords);
-		apple.setPosition(position);
-		window.draw(apple);
-	}
+	sf::RectangleShape apple;
+	apple.setSize(board_field.getSize());
+	apple.setFillColor(sf::Color(77, 19, 0, 255));
+	sf::Vector2f position = foreground.getPosition() + field_size * sf::Vector2f(apple_coords);
+	apple.setPosition(position);
+	window.draw(apple);
 	window.draw(score);
 	window.draw(best_score);
 }

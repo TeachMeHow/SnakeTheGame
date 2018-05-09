@@ -5,15 +5,15 @@
 // Snake crawls on the board and eats things
 // it gets longer when it eats
 // Snake dies after it hits the wall
-// When it dies, snake size is returned to measure the score
+// When it dies, snake points is returned to measure the score
 // Snake can have different speed
 
 class Snake
 {
-	int size = 0;
+	int points = 0;
 	sf::Color color = sf::Color(149, 36, 0, 255);
 	// % of base 
-	double speed_multiplier = 3;
+	double speed_multiplier = 6;
 	enum Directions {UP, RIGHT, DOWN, LEFT } direction;
 	std::list<sf::Vector2i> coordinates;
 	std::chrono::time_point<std::chrono::steady_clock> time_buffer, time_buffer2;
@@ -25,7 +25,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	void operator++();
 	bool has_snake(const sf::Vector2i coords);
-	int get_size() { return size; }
+	int get_points() { return points; }
 	void move();
 	bool collision();
 	// 0 - go up

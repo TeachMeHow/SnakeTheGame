@@ -22,7 +22,6 @@ class Board
 	int fields_y;
 	// grid of fields
 	std::vector<sf::Vector2i> coordinates;
-	bool apple_placed = true;
 	sf::Vector2i apple_coords = sf::Vector2i(1, 1);
 	
 	Snake& snake;
@@ -34,7 +33,7 @@ public:
 	Board(Snake& sneck);
 	~Board();
 	// draws the background
-	void draw(sf::RenderWindow& window, sf::Font& font) const;
+	void draw(sf::RenderWindow& window, sf::Font& font, std::vector<int>& scores) const;
 	// update EVERY draw
 	void update();
 };

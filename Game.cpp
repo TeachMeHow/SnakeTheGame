@@ -1,9 +1,22 @@
 #include "Game.h"
+#include <fstream>
+#include <iostream>
 
 
 
 Game::Game(sf::RenderWindow& win) : window(win), board(snake)//, board()
 {
+	// open file and read scores
+	std::ifstream file;
+	file.open("scores.dat");
+	int input;
+	while (file >> input)
+	{
+		scores.push_back(input);
+	}
+	file.close();
+	// sort scores
+	std::sort(scores.begin(), scores.end(), [](int a, int b) { return a > b; });
 	window_width = 600;
 	// 600 for board + 200 for score
 	window_height = 600 + 200;
@@ -21,6 +34,16 @@ Game::Game(sf::RenderWindow& win) : window(win), board(snake)//, board()
 
 Game::~Game()
 {
+	// open file and read scores
+	std::ofstream file;
+	file.open("scores.dat", std::ios::trunc);
+	auto it = scores.cbegin();
+	while (it != scores.cend())
+	{
+		file << *it << std::endl;
+		it++;
+	}
+	file.close();
 }
 
 void Game::start_game()
@@ -59,10 +82,12 @@ void Game::start_game()
 		snake.move();
 		if (snake.collision())
 			state = END;
-		board.draw(window, font);
+		board.draw(window, font, scores);
 		snake.draw(window);
 		window.display();
 	}
+	// save scoreboard to file
+	add_score(snake.get_points());
 	window.close();
 }
 
@@ -82,4 +107,12 @@ void Game::_debug_change_state(int i)
 	default:
 		break;
 	}
+}
+
+void Game::add_score(int score)
+{
+	scores.push_back(score);
+	std::sort(scores.begin(), scores.end(), [](int a, int b) { return a > b; });
+	if (scores.size() > 1000)
+		scores.pop_back();
 }
