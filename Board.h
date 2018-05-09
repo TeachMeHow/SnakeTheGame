@@ -1,7 +1,7 @@
 #pragma once
-#include "Field.h"
 #include "Snake.h"
 #include <SFML/Graphics.hpp>
+#include <vector>
 // Board is a user defined rectangular plane divided into fields
 // each field can spawn an apple that can be eaten by a snake
 // if snake hits the edge of a board, it dies
@@ -20,9 +20,13 @@ class Board
 	int fields_x;
 	int fields_y;
 	// grid of fields
-	Field** grid;
+	std::vector<sf::Vector2i> coordinates;
+	bool apple_placed = true;
+	sf::Vector2i apple_coords = sf::Vector2i(1, 1);
 	
 	Snake& snake;
+	// TODO make faster if there is a lot of SNEK
+	void place_apple();
 
 
 public:
@@ -30,6 +34,7 @@ public:
 	~Board();
 	// draws the background
 	void draw(sf::RenderWindow& window, sf::Font& font) const;
-
+	// update EVERY draw
+	void update();
 };
 

@@ -1,11 +1,29 @@
 #include "Board.h"
+#include <random>
 
 
+
+void Board::update()
+{
+	if (apple_placed == false)
+	{
+		place_apple();
+	}
+	snake.move();
+
+}
 
 Board::Board(Snake& sneck) : snake(sneck)
 {
-	fields_x = 15;
-	fields_y = 15;
+	fields_x = 20;
+	fields_y = 20;
+	for (size_t y = 0; y < fields_y; y++)
+	{
+		for (size_t x = 0; x < fields_x; x++)
+		{
+			coordinates.emplace_back(sf::Vector2i(x, y));
+		}
+	}
 }
 
 
@@ -15,7 +33,6 @@ Board::~Board()
 
 void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 {
-	
 	window.clear(bg_color);
 	int window_width = window.getSize().x;
 	int frame_size = window_width - 2 * 20;
@@ -36,9 +53,10 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 	
 	sf::RectangleShape board_field;
 	board_field.setFillColor(field_color);
-	double field_size;
+	float field_size;
 	field_size = foreground.getSize().x / fields_x;
 	board_field.setSize(sf::Vector2f(field_size, field_size));
+	
 
 	sf::Text score;
 	score.setFont(font);
@@ -60,6 +78,7 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 	best_score.setString("BEST SCORE: 200");
 
 
+
 	window.draw(frame);
 	window.draw(foreground);
 	for (size_t j = 0; j < fields_y; j++)
@@ -73,6 +92,31 @@ void Board::draw(sf::RenderWindow & window, sf::Font& font) const
 			}
 		}
 	}
+	if (apple_placed)
+	{
+		sf::RectangleShape apple;
+		apple.setSize(board_field.getSize());
+		apple.setFillColor(sf::Color::Red);
+		sf::Vector2f position = foreground.getPosition() + field_size * sf::Vector2f(apple_coords);
+		apple.setPosition(position);
+		window.draw(apple);
+	}
 	window.draw(score);
 	window.draw(best_score);
+}
+
+void Board::place_apple()
+{
+	//int range = (fields_x) * fields_y - 1;
+	//// generate random
+	//int r = 0;
+	//while (true)
+	//{
+	//	if (!snake.has_snake(coordinates[r]))
+	//	{
+	//		apple_placed = true;
+	//		apple_coords = coordinates[r];
+	//		break;
+	//	}
+	//}
 }

@@ -55,6 +55,7 @@ void Game::start_game()
 					snake.steer(3);
 			}
 		}
+		board.update();
 		board.draw(window, font);
 		snake.draw(window);
 		window.display();

@@ -23,6 +23,7 @@ public:
 	~Snake();
 	void draw(sf::RenderWindow& window);
 	void operator++();
+	bool has_snake(const sf::Vector2i coords);
 	int get_size() { return size; }
 	void move();
 	// 0 - go up

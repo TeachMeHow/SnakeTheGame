@@ -17,15 +17,14 @@ Snake::~Snake()
 
 void Snake::draw(sf::RenderWindow & window)
 {
-	move();
 	sf::Color color = sf::Color(149, 36, 0, 255);
 	sf::RectangleShape snake_tail;
 	snake_tail.setFillColor(color);
-	snake_tail.setSize(sf::Vector2f(20, 20));
+	snake_tail.setSize(sf::Vector2f(27,27));
 	// TODO fix
 	auto dw = [&snake_tail, &window](const sf::Vector2i& c) 
 	{ 
-		snake_tail.setPosition(sf::Vector2f(40 + c.x * 20, 40 + c.y * 20)); 
+		snake_tail.setPosition(sf::Vector2f(30 + c.x * 27, 30 + c.y * 27)); 
 		window.draw(snake_tail);
 	};
 	std::for_each(coordinates.cbegin(), coordinates.cend(), dw);
@@ -37,6 +36,21 @@ void Snake::operator++()
 	++size;
 	coordinates.push_back(coordinates.back());
 }
+
+bool Snake::has_snake(const sf::Vector2i coords)
+{
+	auto it = coordinates.cbegin();
+	while (it != coordinates.cend());
+	{
+		if (*it == coords)
+		{
+			return true;
+		}
+		it++;
+	}
+	return false;
+}
+
 
 void Snake::move()
 {
@@ -66,6 +80,7 @@ void Snake::move()
 
 void Snake::steer(int dir)
 {
+	// TODO quick consequent keystrokes change direction
 	switch (direction)
 	{
 	case UP:
@@ -108,5 +123,5 @@ void Snake::set_start_point(int x, int y, int dir)
 	}
 	coordinates.push_back(sf::Vector2i(x, y));
 	coordinates.push_back(sf::Vector2i(x + 1, y));
-	coordinates.push_back(sf::Vector2i(x, y + 1));
+	coordinates.push_back(sf::Vector2i(x + 2, y));
 }
